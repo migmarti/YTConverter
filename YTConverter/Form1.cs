@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Xabe.FFmpeg;
+using Xabe.FFmpeg.Enums;
+using Xabe.FFmpeg.Model;
+using YoutubeExplode;
+using YoutubeExplode.Models.MediaStreams;
+using YoutubeExtractor;
+using YTConverter.Properties;
+
+namespace YTConverter
+{
+    public partial class Form1 : Form
+    {
+        string selectedPath;
+        YoutubeMediaDownloader ytd; 
+        public Form1()
+        {
+            InitializeComponent();
+            ytd = new YoutubeMediaDownloader(progressBar1, percentageLabel);
+            selectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            directoryTextBox.Text = selectedPath;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var folderBrowser = new FolderBrowserDialog();
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
+            {
+                selectedPath = folderBrowser.SelectedPath;
+                directoryTextBox.Text = selectedPath;
+            }
+        }
+
+        private void pasteButton_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText(TextDataFormat.Text))
+            {
+                string clipboardText = Clipboard.GetText(TextDataFormat.Text);
+                linkTextBox.Text = clipboardText;
+            }
+        }
+
+        private void downloadMP3Button_Click(object sender, EventArgs e)
+        {
+            ytd.handleYouTubeMediaDownload(linkTextBox.Text, true, selectedPath);
+        }
+
+        private void downloadVideoButton_Click(object sender, EventArgs e)
+        {
+            ytd.handleYouTubeMediaDownload(linkTextBox.Text, false, selectedPath);
+        }
+    }
+}
