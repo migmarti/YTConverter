@@ -37,15 +37,39 @@ namespace YTConverter
             return true;
         }
 
-        public async void handleYouTubeMediaDownload(string url, bool asMP3, string selectedPath)
+        public async Task<string> getYouTubeMediaTitle(string url)
+        {
+            try
+            {
+                updateProgress("Getting video data: ", 0);
+                var id = YoutubeClient.ParseVideoId(url);
+                var client = new YoutubeClient();
+                var video = await client.GetVideoAsync(id);
+                var title = video.Title.ToString();
+                title = replaceInvalidChars(title);
+                updateProgress("Video data retrieved: ", 100);
+                return title;
+            }
+            catch (FormatException e)
+            {
+                MessageBox.Show(e.Message);
+                updateProgress("", 0);
+            }        
+            return "";
+        }
+
+        public async 
+        Task
+handleYouTubeMediaDownload(string url, bool asMP3, string selectedPath, string title)
         {
             updateProgress("Preparing Stream Information: ", 0);
             try
             {
                 var id = YoutubeClient.ParseVideoId(url);
                 var client = new YoutubeClient();
-                var video = await client.GetVideoAsync(id);
-                var title = video.Title.ToString();
+                if (title == "") {
+                    title = await getYouTubeMediaTitle(url);
+                }
                 title = replaceInvalidChars(title);
                 var streamInfoSet = await client.GetVideoMediaStreamInfosAsync(id);
                 MuxedStreamInfo streamInfo = streamInfoSet.Muxed.WithHighestVideoQuality();
@@ -54,14 +78,11 @@ namespace YTConverter
                 await downloadYouTubeMedia(client, streamInfo, title, downloadPath);
                 if (asMP3)
                 {
-                    updateProgress("Starting MP3 Conversion: ", 0);
                     await convertMp4ToMp3(downloadPath, title);
-                    updateProgress("Conversion Done! ", 100);
                     MessageBox.Show("Done converting downloaded video to MP3: " + title + "\nAt: " + Path.ChangeExtension(downloadPath, FileExtensions.Mp3));
                 }
                 else
                 {
-                    updateProgress("Video Download Done! ", 100);
                     MessageBox.Show("Done downloading video:\n" + title + "\nAt:\n" + downloadPath);
                 }
 
@@ -80,14 +101,15 @@ namespace YTConverter
                 updateProgress("Downloading Video: ", (int)((p - (int)p) * 100));
             });
             await client.DownloadMediaStreamAsync(streamInfo, downloadPath, progress);
+            updateProgress("Video Download Done! ", 100);
         }
 
-        private async Task convertMp4ToMp3(string fileName, string title)
+        private async Task convertMp4ToMp3(string mp4File, string title)
         {
-            string output = Path.ChangeExtension(fileName, FileExtensions.Mp3);
+            string output = Path.ChangeExtension(mp4File, FileExtensions.Mp3);
             try
             {
-                IConversion conversion = Conversion.ExtractAudio(fileName, output);
+                IConversion conversion = Conversion.ExtractAudio(mp4File, output);
                 conversion.OnProgress += (sender, args) =>
                 {
                     int percent = (int)(Math.Round(args.Duration.TotalSeconds / args.TotalLength.TotalSeconds, 2) * 100);
@@ -95,11 +117,12 @@ namespace YTConverter
                 };
                 IConversionResult result = await conversion.Start();
             }
-            catch (Xabe.FFmpeg.Exceptions.ConversionException e)
+            catch (Xabe.FFmpeg.Exceptions.ConversionException)
             {
-                MessageBox.Show(title + " already exists at " + fileName);
+                MessageBox.Show(title + " already exists at " + output);
             }
-            File.Delete(fileName);
+            File.Delete(mp4File);
+            updateProgress("Conversion Done! ", 100);
         }
 
         public string replaceInvalidChars(string filename)

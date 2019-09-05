@@ -38,6 +38,9 @@
             this.downloadVideoButton = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.percentageLabel = new System.Windows.Forms.Label();
+            this.textBoxTitle = new System.Windows.Forms.TextBox();
+            this.buttonGetTitle = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -95,7 +98,7 @@
             // 
             // downloadMP3Button
             // 
-            this.downloadMP3Button.Location = new System.Drawing.Point(278, 92);
+            this.downloadMP3Button.Location = new System.Drawing.Point(278, 133);
             this.downloadMP3Button.Name = "downloadMP3Button";
             this.downloadMP3Button.Size = new System.Drawing.Size(132, 45);
             this.downloadMP3Button.TabIndex = 6;
@@ -105,7 +108,7 @@
             // 
             // downloadVideoButton
             // 
-            this.downloadVideoButton.Location = new System.Drawing.Point(113, 92);
+            this.downloadVideoButton.Location = new System.Drawing.Point(113, 133);
             this.downloadVideoButton.Name = "downloadVideoButton";
             this.downloadVideoButton.Size = new System.Drawing.Size(132, 45);
             this.downloadVideoButton.TabIndex = 7;
@@ -115,7 +118,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(113, 153);
+            this.progressBar1.Location = new System.Drawing.Point(113, 194);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(297, 23);
             this.progressBar1.TabIndex = 8;
@@ -123,17 +126,46 @@
             // percentageLabel
             // 
             this.percentageLabel.AutoSize = true;
-            this.percentageLabel.Location = new System.Drawing.Point(110, 179);
+            this.percentageLabel.Location = new System.Drawing.Point(110, 220);
             this.percentageLabel.Name = "percentageLabel";
             this.percentageLabel.Size = new System.Drawing.Size(21, 13);
             this.percentageLabel.TabIndex = 9;
             this.percentageLabel.Text = "0%";
             // 
+            // textBoxTitle
+            // 
+            this.textBoxTitle.Location = new System.Drawing.Point(113, 89);
+            this.textBoxTitle.Name = "textBoxTitle";
+            this.textBoxTitle.Size = new System.Drawing.Size(297, 20);
+            this.textBoxTitle.TabIndex = 10;
+            // 
+            // buttonGetTitle
+            // 
+            this.buttonGetTitle.Location = new System.Drawing.Point(416, 89);
+            this.buttonGetTitle.Name = "buttonGetTitle";
+            this.buttonGetTitle.Size = new System.Drawing.Size(75, 23);
+            this.buttonGetTitle.TabIndex = 11;
+            this.buttonGetTitle.Text = "Get Title";
+            this.buttonGetTitle.UseVisualStyleBackColor = true;
+            this.buttonGetTitle.Click += new System.EventHandler(this.buttonGetTitle_ClickAsync);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 94);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(73, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Override Title:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(518, 215);
+            this.ClientSize = new System.Drawing.Size(524, 253);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.buttonGetTitle);
+            this.Controls.Add(this.textBoxTitle);
             this.Controls.Add(this.percentageLabel);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.downloadVideoButton);
@@ -163,6 +195,9 @@
         private System.Windows.Forms.Button downloadVideoButton;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label percentageLabel;
+        private System.Windows.Forms.TextBox textBoxTitle;
+        private System.Windows.Forms.Button buttonGetTitle;
+        private System.Windows.Forms.Label label3;
     }
 }
 

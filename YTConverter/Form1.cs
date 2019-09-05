@@ -49,14 +49,34 @@ namespace YTConverter
             }
         }
 
-        private void downloadMP3Button_Click(object sender, EventArgs e)
+        private async void downloadMP3Button_Click(object sender, EventArgs e)
         {
-            ytd.handleYouTubeMediaDownload(linkTextBox.Text, true, selectedPath);
+            enableButtons(false);
+            await ytd.handleYouTubeMediaDownload(linkTextBox.Text, true, selectedPath, textBoxTitle.Text);
+            enableButtons(true);
+            textBoxTitle.Text = "";
         }
 
-        private void downloadVideoButton_Click(object sender, EventArgs e)
+        private async void downloadVideoButton_Click(object sender, EventArgs e)
         {
-            ytd.handleYouTubeMediaDownload(linkTextBox.Text, false, selectedPath);
+            enableButtons(false);
+            await ytd.handleYouTubeMediaDownload(linkTextBox.Text, false, selectedPath, textBoxTitle.Text);
+            enableButtons(true);
+            textBoxTitle.Text = "";
+        }
+
+        private async void buttonGetTitle_ClickAsync(object sender, EventArgs e)
+        {
+            enableButtons(false);
+            textBoxTitle.Text = await ytd.getYouTubeMediaTitle(linkTextBox.Text);
+            enableButtons(true);
+        }
+
+        private void enableButtons(bool enabled)
+        {
+            downloadMP3Button.Enabled = enabled;
+            downloadVideoButton.Enabled = enabled;
+            buttonGetTitle.Enabled = enabled;
         }
     }
 }
