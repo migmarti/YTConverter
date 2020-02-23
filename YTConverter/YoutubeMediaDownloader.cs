@@ -58,9 +58,7 @@ namespace YTConverter
             return "";
         }
 
-        public async 
-        Task
-handleYouTubeMediaDownload(string url, bool asMP3, string selectedPath, string title)
+        public async Task handleYouTubeMediaDownload(string url, bool asMP3, string selectedPath, string title)
         {
             updateProgress("Preparing Stream Information: ", 0);
             try
@@ -72,7 +70,7 @@ handleYouTubeMediaDownload(string url, bool asMP3, string selectedPath, string t
                 }
                 title = replaceInvalidChars(title);
                 var streamInfoSet = await client.GetVideoMediaStreamInfosAsync(id);
-                MuxedStreamInfo streamInfo = streamInfoSet.Muxed.WithHighestVideoQuality();
+                var streamInfo = streamInfoSet.Muxed.WithHighestVideoQuality();
                 var ext = streamInfo.Container.GetFileExtension().ToString();
                 string downloadPath = $"{selectedPath}\\{title}.{ext}";
                 await downloadYouTubeMedia(client, streamInfo, title, downloadPath);
