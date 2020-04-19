@@ -58,7 +58,7 @@ namespace YTConverter
             return "";
         }
 
-        public async Task handleYouTubeMediaDownload(string url, bool asMP3, string selectedPath, string title)
+        public async Task handleYouTubeMediaDownload(string url, bool asMP3, string selectedPath, string title, string albumTitle)
         {
             updateProgress("Preparing Stream Information: ", 0);
             try
@@ -76,7 +76,7 @@ namespace YTConverter
                 await downloadYouTubeMedia(client, streamInfo, title, downloadPath);
                 if (asMP3)
                 {
-                    await convertMp4ToMp3(downloadPath, title);
+                    await convertMp4ToMp3(downloadPath, title, albumTitle);
                     MessageBox.Show("Done converting downloaded video to MP3: " + title + "\nAt: " + Path.ChangeExtension(downloadPath, FileExtensions.Mp3));
                 }
                 else
@@ -102,7 +102,7 @@ namespace YTConverter
             updateProgress("Video Download Done! ", 100);
         }
 
-        private async Task convertMp4ToMp3(string mp4File, string title)
+        private async Task convertMp4ToMp3(string mp4File, string title, string albumTitle)
         {
             string output = Path.ChangeExtension(mp4File, FileExtensions.Mp3);
             try
@@ -119,8 +119,19 @@ namespace YTConverter
             {
                 MessageBox.Show(title + " already exists at " + output);
             }
+            addAlbumTag(output, albumTitle);
             File.Delete(mp4File);
             updateProgress("Conversion Done! ", 100);
+        }
+
+        private void addAlbumTag(String path, String albumTitle)
+        {
+            if (albumTitle != "")
+            {
+                TagLib.File f = TagLib.File.Create(path);
+                f.Tag.Album = albumTitle;
+                f.Save();
+            }
         }
 
         public string replaceInvalidChars(string filename)

@@ -52,7 +52,7 @@ namespace YTConverter
         private async void downloadMP3Button_Click(object sender, EventArgs e)
         {
             enableButtons(false);
-            await ytd.handleYouTubeMediaDownload(linkTextBox.Text, true, selectedPath, textBoxTitle.Text);
+            await ytd.handleYouTubeMediaDownload(linkTextBox.Text, true, selectedPath, textBoxTitle.Text, textBoxAlbum.Text);
             enableButtons(true);
             textBoxTitle.Text = "";
         }
@@ -60,7 +60,7 @@ namespace YTConverter
         private async void downloadVideoButton_Click(object sender, EventArgs e)
         {
             enableButtons(false);
-            await ytd.handleYouTubeMediaDownload(linkTextBox.Text, false, selectedPath, textBoxTitle.Text);
+            await ytd.handleYouTubeMediaDownload(linkTextBox.Text, false, selectedPath, textBoxTitle.Text, textBoxAlbum.Text);
             enableButtons(true);
             textBoxTitle.Text = "";
         }

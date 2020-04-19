@@ -41,6 +41,8 @@
             this.textBoxTitle = new System.Windows.Forms.TextBox();
             this.buttonGetTitle = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBoxAlbum = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -62,9 +64,9 @@
             // 
             // directoryButton
             // 
-            this.directoryButton.Location = new System.Drawing.Point(416, 8);
+            this.directoryButton.Location = new System.Drawing.Point(416, 10);
             this.directoryButton.Name = "directoryButton";
-            this.directoryButton.Size = new System.Drawing.Size(75, 23);
+            this.directoryButton.Size = new System.Drawing.Size(75, 20);
             this.directoryButton.TabIndex = 2;
             this.directoryButton.Text = "Change";
             this.directoryButton.UseVisualStyleBackColor = true;
@@ -73,7 +75,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 51);
+            this.label2.Location = new System.Drawing.Point(13, 39);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 13);
             this.label2.TabIndex = 3;
@@ -81,16 +83,16 @@
             // 
             // linkTextBox
             // 
-            this.linkTextBox.Location = new System.Drawing.Point(113, 48);
+            this.linkTextBox.Location = new System.Drawing.Point(113, 36);
             this.linkTextBox.Name = "linkTextBox";
             this.linkTextBox.Size = new System.Drawing.Size(297, 20);
             this.linkTextBox.TabIndex = 4;
             // 
             // pasteButton
             // 
-            this.pasteButton.Location = new System.Drawing.Point(416, 46);
+            this.pasteButton.Location = new System.Drawing.Point(416, 36);
             this.pasteButton.Name = "pasteButton";
-            this.pasteButton.Size = new System.Drawing.Size(75, 23);
+            this.pasteButton.Size = new System.Drawing.Size(75, 21);
             this.pasteButton.TabIndex = 5;
             this.pasteButton.Text = "Paste";
             this.pasteButton.UseVisualStyleBackColor = true;
@@ -98,7 +100,7 @@
             // 
             // downloadMP3Button
             // 
-            this.downloadMP3Button.Location = new System.Drawing.Point(278, 133);
+            this.downloadMP3Button.Location = new System.Drawing.Point(278, 114);
             this.downloadMP3Button.Name = "downloadMP3Button";
             this.downloadMP3Button.Size = new System.Drawing.Size(132, 45);
             this.downloadMP3Button.TabIndex = 6;
@@ -108,7 +110,7 @@
             // 
             // downloadVideoButton
             // 
-            this.downloadVideoButton.Location = new System.Drawing.Point(113, 133);
+            this.downloadVideoButton.Location = new System.Drawing.Point(113, 114);
             this.downloadVideoButton.Name = "downloadVideoButton";
             this.downloadVideoButton.Size = new System.Drawing.Size(132, 45);
             this.downloadVideoButton.TabIndex = 7;
@@ -118,7 +120,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(113, 194);
+            this.progressBar1.Location = new System.Drawing.Point(113, 165);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(297, 23);
             this.progressBar1.TabIndex = 8;
@@ -126,7 +128,7 @@
             // percentageLabel
             // 
             this.percentageLabel.AutoSize = true;
-            this.percentageLabel.Location = new System.Drawing.Point(110, 220);
+            this.percentageLabel.Location = new System.Drawing.Point(110, 191);
             this.percentageLabel.Name = "percentageLabel";
             this.percentageLabel.Size = new System.Drawing.Size(21, 13);
             this.percentageLabel.TabIndex = 9;
@@ -134,16 +136,16 @@
             // 
             // textBoxTitle
             // 
-            this.textBoxTitle.Location = new System.Drawing.Point(113, 89);
+            this.textBoxTitle.Location = new System.Drawing.Point(113, 62);
             this.textBoxTitle.Name = "textBoxTitle";
             this.textBoxTitle.Size = new System.Drawing.Size(297, 20);
             this.textBoxTitle.TabIndex = 10;
             // 
             // buttonGetTitle
             // 
-            this.buttonGetTitle.Location = new System.Drawing.Point(416, 89);
+            this.buttonGetTitle.Location = new System.Drawing.Point(416, 62);
             this.buttonGetTitle.Name = "buttonGetTitle";
-            this.buttonGetTitle.Size = new System.Drawing.Size(75, 23);
+            this.buttonGetTitle.Size = new System.Drawing.Size(75, 20);
             this.buttonGetTitle.TabIndex = 11;
             this.buttonGetTitle.Text = "Get Title";
             this.buttonGetTitle.UseVisualStyleBackColor = true;
@@ -152,17 +154,35 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 94);
+            this.label3.Location = new System.Drawing.Point(13, 65);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 13);
             this.label3.TabIndex = 12;
             this.label3.Text = "Override Title:";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 91);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(81, 13);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Set Album Title:";
+            // 
+            // textBoxAlbum
+            // 
+            this.textBoxAlbum.Location = new System.Drawing.Point(113, 88);
+            this.textBoxAlbum.Name = "textBoxAlbum";
+            this.textBoxAlbum.Size = new System.Drawing.Size(297, 20);
+            this.textBoxAlbum.TabIndex = 13;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 253);
+            this.ClientSize = new System.Drawing.Size(524, 211);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.textBoxAlbum);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.buttonGetTitle);
             this.Controls.Add(this.textBoxTitle);
@@ -177,7 +197,7 @@
             this.Controls.Add(this.directoryTextBox);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "YTConverter";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -198,6 +218,8 @@
         private System.Windows.Forms.TextBox textBoxTitle;
         private System.Windows.Forms.Button buttonGetTitle;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBoxAlbum;
     }
 }
 
