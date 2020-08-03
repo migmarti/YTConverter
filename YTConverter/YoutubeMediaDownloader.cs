@@ -36,7 +36,7 @@ namespace YTConverter
             return "";
         }
 
-        public async Task handleYouTubeMediaDownload(string url, bool asMP3, string selectedPath, string title, string albumTitle)
+        public async Task<string> handleYouTubeMediaDownload(string url, bool asMP3, string selectedPath, string title)
         {
             indicator.updateProgress("Preparing Stream Information: ", 0);
             try
@@ -51,22 +51,13 @@ namespace YTConverter
                 var streamInfo = streamManifest.GetMuxed().WithHighestVideoQuality();
                 string downloadPath = $"{selectedPath}\\{title}.mp4";
                 await downloadYouTubeMedia(client, streamInfo, downloadPath);
-
-                if (asMP3)
-                {
-                    AudioConversionUtils audioConversionUtils = new AudioConversionUtils(indicator);
-                    await audioConversionUtils.convertMp4ToMp3(downloadPath, title, albumTitle);
-                    MessageBox.Show("Done converting downloaded video to MP3: " + title + "\nAt: " + Path.ChangeExtension(downloadPath, FileExtensions.Mp3));
-                }
-                else
-                {
-                    MessageBox.Show("Done downloading video:\n" + title + "\nAt:\n" + downloadPath);
-                }
+                return downloadPath;
             }
             catch (Exception e)
             {
                 MessageBox.Show("An error has occurred: " + e.Message);
                 indicator.updateProgress("", 0);
+                return "";
             }
         }
 

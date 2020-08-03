@@ -21,13 +21,15 @@ namespace YTConverter
     {
         string selectedPath;
         ProgressIndicator progressIndicator;
-        YoutubeMediaDownloader ytd; 
+        YoutubeMediaDownloader ytd;
+        AudioConversionUtils audioConversionUtils;
         public Form1()
         {
             InitializeComponent();
             progressIndicator = new ProgressIndicator(progressBar1, percentageLabel);
             ytd = new YoutubeMediaDownloader(progressIndicator);
             selectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            audioConversionUtils = new AudioConversionUtils(progressIndicator);
             directoryTextBox.Text = selectedPath;
         }
 
@@ -53,7 +55,16 @@ namespace YTConverter
         private async void downloadMP3Button_Click(object sender, EventArgs e)
         {
             enableButtons(false);
-            await ytd.handleYouTubeMediaDownload(linkTextBox.Text, true, selectedPath, textBoxTitle.Text, textBoxAlbum.Text);
+            string downloadPath = await ytd.handleYouTubeMediaDownload(linkTextBox.Text, true, selectedPath, textBoxTitle.Text);
+            if (downloadPath != "")
+            {
+                string outputPath = Path.ChangeExtension(downloadPath, FileExtensions.Mp3);
+                if (await audioConversionUtils.convertMp4ToMp3(downloadPath, outputPath))
+                {
+                    audioConversionUtils.addAlbumTag(outputPath, textBoxAlbum.Text);
+                    MessageBox.Show("Done converting downloaded video to MP3 at: " + outputPath);
+                }
+            }
             enableButtons(true);
             textBoxTitle.Text = "";
         }
@@ -61,7 +72,11 @@ namespace YTConverter
         private async void downloadVideoButton_Click(object sender, EventArgs e)
         {
             enableButtons(false);
-            await ytd.handleYouTubeMediaDownload(linkTextBox.Text, false, selectedPath, textBoxTitle.Text, textBoxAlbum.Text);
+            string downloadPath = await ytd.handleYouTubeMediaDownload(linkTextBox.Text, false, selectedPath, textBoxTitle.Text);
+            if (downloadPath != "")
+            {
+                MessageBox.Show("Done downloading video:\n" + textBoxTitle.Text + "\nAt:\n" + downloadPath);
+            }
             enableButtons(true);
             textBoxTitle.Text = "";
         }

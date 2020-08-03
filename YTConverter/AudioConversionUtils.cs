@@ -16,29 +16,30 @@ namespace YTConverter
             this.indicator = progressIndicator;
         }
 
-        public async Task convertMp4ToMp3(string mp4File, string title, string albumTitle)
+        public async Task<bool> convertMp4ToMp3(string mp4FilePath, string outputFilePath)
         {
-            string output = Path.ChangeExtension(mp4File, FileExtensions.Mp3);
+            bool success = false;
             try
             {
-                IConversion conversion = Conversion.ExtractAudio(mp4File, output);
+                IConversion conversion = Conversion.ExtractAudio(mp4FilePath, outputFilePath);
                 conversion.OnProgress += (sender, args) =>
                 {
                     int percent = (int)(Math.Round(args.Duration.TotalSeconds / args.TotalLength.TotalSeconds, 2) * 100);
                     indicator.updateProgress("Converting to MP3: ", percent);
                 };
                 IConversionResult result = await conversion.Start();
+                File.Delete(mp4FilePath);
+                indicator.updateProgress("Conversion Done! ", 100);
+                success = true;
             }
-            catch (Xabe.FFmpeg.Exceptions.ConversionException)
+            catch (Xabe.FFmpeg.Exceptions.ConversionException e)
             {
-                MessageBox.Show(title + " already exists at " + output);
+                MessageBox.Show("An error has occurred at: " + outputFilePath + "\n" + e.Message);
             }
-            addAlbumTag(output, albumTitle);
-            File.Delete(mp4File);
-            indicator.updateProgress("Conversion Done! ", 100);
+            return success;
         }
 
-        private void addAlbumTag(String path, String albumTitle)
+        public void addAlbumTag(string path, string albumTitle)
         {
             if (albumTitle != "")
             {
