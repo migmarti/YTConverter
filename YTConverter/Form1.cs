@@ -20,11 +20,13 @@ namespace YTConverter
     public partial class Form1 : Form
     {
         string selectedPath;
+        ProgressIndicator progressIndicator;
         YoutubeMediaDownloader ytd; 
         public Form1()
         {
             InitializeComponent();
-            ytd = new YoutubeMediaDownloader(progressBar1, percentageLabel);
+            progressIndicator = new ProgressIndicator(progressBar1, percentageLabel);
+            ytd = new YoutubeMediaDownloader(progressIndicator);
             selectedPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             directoryTextBox.Text = selectedPath;
         }

@@ -104,7 +104,7 @@
             this.downloadMP3Button.Name = "downloadMP3Button";
             this.downloadMP3Button.Size = new System.Drawing.Size(132, 45);
             this.downloadMP3Button.TabIndex = 6;
-            this.downloadMP3Button.Text = "Download as MP3";
+            this.downloadMP3Button.Text = "Download and Convert to MP3";
             this.downloadMP3Button.UseVisualStyleBackColor = true;
             this.downloadMP3Button.Click += new System.EventHandler(this.downloadMP3Button_Click);
             // 
@@ -114,7 +114,7 @@
             this.downloadVideoButton.Name = "downloadVideoButton";
             this.downloadVideoButton.Size = new System.Drawing.Size(132, 45);
             this.downloadVideoButton.TabIndex = 7;
-            this.downloadVideoButton.Text = "Download ";
+            this.downloadVideoButton.Text = "Download Video";
             this.downloadVideoButton.UseVisualStyleBackColor = true;
             this.downloadVideoButton.Click += new System.EventHandler(this.downloadVideoButton_Click);
             // 
