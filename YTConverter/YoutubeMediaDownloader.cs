@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Forms;
 using Xabe.FFmpeg;
-using Xabe.FFmpeg.Enums;
 using Xabe.FFmpeg.Model;
 using YoutubeExplode;
-using YoutubeExplode.Models.MediaStreams;
+using YoutubeExplode.Videos.Streams;
 
 namespace YTConverter
 {
@@ -42,17 +39,16 @@ namespace YTConverter
             try
             {
                 updateProgress("Getting video data: ", 0);
-                var id = YoutubeClient.ParseVideoId(url);
                 var client = new YoutubeClient();
-                var video = await client.GetVideoAsync(id);
+                var video = await client.Videos.GetAsync(url);
                 var title = video.Title.ToString();
                 title = replaceInvalidChars(title);
                 updateProgress("Video data retrieved: ", 100);
                 return title;
             }
-            catch (FormatException e)
+            catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show("An error has occurred: " + e.Message + "\n\n" + e.Source + "\n\n" + e.StackTrace);
                 updateProgress("", 0);
             }        
             return "";
@@ -63,48 +59,47 @@ namespace YTConverter
             updateProgress("Preparing Stream Information: ", 0);
             try
             {
-                var id = YoutubeClient.ParseVideoId(url);
+                var id = getVideoId(url);
                 var client = new YoutubeClient();
                 if (title == "") {
                     title = await getYouTubeMediaTitle(url);
                 }
                 title = replaceInvalidChars(title);
-                var streamInfoSet = await client.GetVideoMediaStreamInfosAsync(id);
-                var streamInfo = streamInfoSet.Muxed.WithHighestVideoQuality();
-                var ext = streamInfo.Container.GetFileExtension().ToString();
-                string downloadPath = $"{selectedPath}\\{title}.{ext}";
-                await downloadYouTubeMedia(client, streamInfo, title, downloadPath);
+                var streamManifest = await client.Videos.Streams.GetManifestAsync(id);
+                var streamInfo = streamManifest.GetMuxed().WithHighestVideoQuality();
+                string downloadPath = $"{selectedPath}\\{title}.mp4";
+                await downloadYouTubeMedia(client, streamInfo, downloadPath);
+
                 if (asMP3)
                 {
                     await convertMp4ToMp3(downloadPath, title, albumTitle);
-                    MessageBox.Show("Done converting downloaded video to MP3: " + title + "\nAt: " + Path.ChangeExtension(downloadPath, FileExtensions.Mp3));
+                    MessageBox.Show("Done converting downloaded video to MP3: " + title + "\nAt: " + downloadPath);
                 }
                 else
                 {
                     MessageBox.Show("Done downloading video:\n" + title + "\nAt:\n" + downloadPath);
                 }
-
             }
-            catch (FormatException e)
+            catch (Exception e)
             {
                 MessageBox.Show(e.Message);
                 updateProgress("", 0);
             }
         }
 
-        private async Task downloadYouTubeMedia(YoutubeClient client, MediaStreamInfo streamInfo, string title, string downloadPath)
+        private async Task downloadYouTubeMedia(YoutubeClient client, IStreamInfo streamInfo, string downloadPath)
         {
             var progress = new Progress<double>(p =>
             {
-                updateProgress("Downloading Video: ", (int)((p - (int)p) * 100));
+                updateProgress("Downloading Media: ", (int)((p - (int)p) * 100));
             });
-            await client.DownloadMediaStreamAsync(streamInfo, downloadPath, progress);
-            updateProgress("Video Download Done! ", 100);
+            await client.Videos.Streams.DownloadAsync(streamInfo, downloadPath, progress);
+            updateProgress("Media Download Done! ", 100);
         }
 
         private async Task convertMp4ToMp3(string mp4File, string title, string albumTitle)
         {
-            string output = Path.ChangeExtension(mp4File, FileExtensions.Mp3);
+            string output = Path.ChangeExtension(mp4File, Xabe.FFmpeg.Enums.FileExtensions.Mp3);
             try
             {
                 IConversion conversion = Conversion.ExtractAudio(mp4File, output);
@@ -132,6 +127,12 @@ namespace YTConverter
                 f.Tag.Album = albumTitle;
                 f.Save();
             }
+        }
+
+        private String getVideoId(String url)
+        {
+            Uri uri = new Uri(url);
+            return HttpUtility.ParseQueryString(uri.Query).Get("v");
         }
 
         public string replaceInvalidChars(string filename)

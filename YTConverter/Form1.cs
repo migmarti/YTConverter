@@ -12,7 +12,6 @@ using Xabe.FFmpeg;
 using Xabe.FFmpeg.Enums;
 using Xabe.FFmpeg.Model;
 using YoutubeExplode;
-using YoutubeExplode.Models.MediaStreams;
 using YoutubeExtractor;
 using YTConverter.Properties;
 
