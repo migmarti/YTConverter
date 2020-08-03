@@ -36,7 +36,7 @@ namespace YTConverter
             return "";
         }
 
-        public async Task<string> handleYouTubeMediaDownload(string url, bool asMP3, string selectedPath, string title)
+        public async Task<string> handleYouTubeMediaDownload(string url, string selectedPath, string title)
         {
             indicator.updateProgress("Preparing Stream Information: ", 0);
             try

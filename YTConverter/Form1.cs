@@ -55,7 +55,7 @@ namespace YTConverter
         private async void downloadMP3Button_Click(object sender, EventArgs e)
         {
             enableButtons(false);
-            string downloadPath = await ytd.handleYouTubeMediaDownload(linkTextBox.Text, true, selectedPath, textBoxTitle.Text);
+            string downloadPath = await ytd.handleYouTubeMediaDownload(linkTextBox.Text, selectedPath, textBoxTitle.Text);
             if (downloadPath != "")
             {
                 string outputPath = Path.ChangeExtension(downloadPath, FileExtensions.Mp3);
@@ -72,7 +72,7 @@ namespace YTConverter
         private async void downloadVideoButton_Click(object sender, EventArgs e)
         {
             enableButtons(false);
-            string downloadPath = await ytd.handleYouTubeMediaDownload(linkTextBox.Text, false, selectedPath, textBoxTitle.Text);
+            string downloadPath = await ytd.handleYouTubeMediaDownload(linkTextBox.Text, selectedPath, textBoxTitle.Text);
             if (downloadPath != "")
             {
                 MessageBox.Show("Done downloading video:\n" + textBoxTitle.Text + "\nAt:\n" + downloadPath);
@@ -93,6 +93,7 @@ namespace YTConverter
             downloadMP3Button.Enabled = enabled;
             downloadVideoButton.Enabled = enabled;
             buttonGetTitle.Enabled = enabled;
+            progressIndicator.updateProgress("", 0);
         }
     }
 }
