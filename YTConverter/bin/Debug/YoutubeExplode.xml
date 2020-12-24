@@ -105,6 +105,12 @@
         <member name="M:YoutubeExplode.Channels.ChannelId.ToString">
             <inheritdoc />
         </member>
+        <member name="M:YoutubeExplode.Channels.ChannelId.TryParse(System.String)">
+            <summary>
+            Attempts to parse the specified string as a channel ID or URL.
+            Returns null in case of failure.
+            </summary>
+        </member>
         <member name="M:YoutubeExplode.Channels.ChannelId.Equals(YoutubeExplode.Channels.ChannelId)">
             <inheritdoc />
         </member>
@@ -134,12 +140,6 @@
             Converts ID to string.
             </summary>
         </member>
-        <member name="M:YoutubeExplode.Channels.ChannelId.TryParse(System.String)">
-            <summary>
-            Attempts to parse the specified string as a channel ID or URL.
-            Returns null in case of failure.
-            </summary>
-        </member>
         <member name="T:YoutubeExplode.Channels.UserName">
             <summary>
             Encapsulates a valid YouTube user name.
@@ -157,6 +157,12 @@
         </member>
         <member name="M:YoutubeExplode.Channels.UserName.ToString">
             <inheritdoc />
+        </member>
+        <member name="M:YoutubeExplode.Channels.UserName.TryParse(System.String)">
+            <summary>
+            Attempts to parse the specified string as a username or URL.
+            Returns null in case of failure.
+            </summary>
         </member>
         <member name="M:YoutubeExplode.Channels.UserName.Equals(YoutubeExplode.Channels.UserName)">
             <inheritdoc />
@@ -185,12 +191,6 @@
         <member name="M:YoutubeExplode.Channels.UserName.op_Implicit(YoutubeExplode.Channels.UserName)~System.String">
             <summary>
             Converts user name to string.
-            </summary>
-        </member>
-        <member name="M:YoutubeExplode.Channels.UserName.TryParse(System.String)">
-            <summary>
-            Attempts to parse the specified string as a username or URL.
-            Returns null in case of failure.
             </summary>
         </member>
         <member name="T:YoutubeExplode.Common.Engagement">
@@ -271,6 +271,16 @@
         <member name="M:YoutubeExplode.Exceptions.FatalFailureException.#ctor(System.String)">
             <summary>
             Initializes an instance of <see cref="T:YoutubeExplode.Exceptions.FatalFailureException"/>.
+            </summary>
+        </member>
+        <member name="T:YoutubeExplode.Exceptions.PlaylistUnavailableException">
+            <summary>
+            Exception thrown when the requested playlist is unavailable.
+            </summary>
+        </member>
+        <member name="M:YoutubeExplode.Exceptions.PlaylistUnavailableException.#ctor(System.String)">
+            <summary>
+            Initializes an instance of <see cref="T:YoutubeExplode.Exceptions.PlaylistUnavailableException"/>.
             </summary>
         </member>
         <member name="T:YoutubeExplode.Exceptions.RequestLimitExceededException">
@@ -427,6 +437,12 @@
         <member name="M:YoutubeExplode.Playlists.PlaylistId.ToString">
             <inheritdoc />
         </member>
+        <member name="M:YoutubeExplode.Playlists.PlaylistId.TryParse(System.String)">
+            <summary>
+            Attempts to parse the specified string as a playlist ID or URL.
+            Returns null in case of failure.
+            </summary>
+        </member>
         <member name="M:YoutubeExplode.Playlists.PlaylistId.Equals(YoutubeExplode.Playlists.PlaylistId)">
             <inheritdoc />
         </member>
@@ -454,12 +470,6 @@
         <member name="M:YoutubeExplode.Playlists.PlaylistId.op_Implicit(YoutubeExplode.Playlists.PlaylistId)~System.String">
             <summary>
             Converts ID to string.
-            </summary>
-        </member>
-        <member name="M:YoutubeExplode.Playlists.PlaylistId.TryParse(System.String)">
-            <summary>
-            Attempts to parse the specified string as a playlist ID or URL.
-            Returns null in case of failure.
             </summary>
         </member>
         <member name="T:YoutubeExplode.Search.SearchClient">
@@ -497,12 +507,12 @@
         </member>
         <member name="P:YoutubeExplode.Videos.ClosedCaptions.ClosedCaption.Offset">
             <summary>
-            Time at which this caption starts being displayed.
+            Time of this caption.
             </summary>
         </member>
         <member name="P:YoutubeExplode.Videos.ClosedCaptions.ClosedCaption.Duration">
             <summary>
-            Duration this caption is displayed.
+            Duration of this caption.
             </summary>
         </member>
         <member name="P:YoutubeExplode.Videos.ClosedCaptions.ClosedCaption.Parts">
@@ -753,7 +763,6 @@
             <summary>
             Initializes an instance of <see cref="T:YoutubeExplode.Videos.Streams.Bitrate"/>.
             </summary>
-            <param name="bitsPerSecond"></param>
         </member>
         <member name="M:YoutubeExplode.Videos.Streams.Bitrate.ToString">
             <inheritdoc />
@@ -809,6 +818,21 @@
         <member name="M:YoutubeExplode.Videos.Streams.Container.ToString">
             <inheritdoc />
         </member>
+        <member name="P:YoutubeExplode.Videos.Streams.Container.Mp4">
+            <summary>
+            MPEG-4 Part 14 (.mp4).
+            </summary>
+        </member>
+        <member name="P:YoutubeExplode.Videos.Streams.Container.WebM">
+            <summary>
+            Web Media (.webm).
+            </summary>
+        </member>
+        <member name="P:YoutubeExplode.Videos.Streams.Container.Tgpp">
+            <summary>
+            3rd Generation Partnership Project (.3gpp).
+            </summary>
+        </member>
         <member name="M:YoutubeExplode.Videos.Streams.Container.Equals(YoutubeExplode.Videos.Streams.Container)">
             <inheritdoc />
         </member>
@@ -826,26 +850,6 @@
         <member name="M:YoutubeExplode.Videos.Streams.Container.op_Inequality(YoutubeExplode.Videos.Streams.Container,YoutubeExplode.Videos.Streams.Container)">
             <summary>
             Equality check.
-            </summary>
-        </member>
-        <member name="P:YoutubeExplode.Videos.Streams.Container.Mp4">
-            <summary>
-            MPEG-4 Part 14 (.mp4).
-            </summary>
-        </member>
-        <member name="P:YoutubeExplode.Videos.Streams.Container.WebM">
-            <summary>
-            Web Media (.webm).
-            </summary>
-        </member>
-        <member name="P:YoutubeExplode.Videos.Streams.Container.Tgpp">
-            <summary>
-            3rd Generation Partnership Project (.3gpp).
-            </summary>
-        </member>
-        <member name="M:YoutubeExplode.Videos.Streams.Container.Parse(System.String)">
-            <summary>
-            Parse a container from name.
             </summary>
         </member>
         <member name="T:YoutubeExplode.Videos.Streams.FileSize">
@@ -1112,6 +1116,41 @@
         <member name="M:YoutubeExplode.Videos.Streams.MuxedStreamInfo.ToString">
             <inheritdoc />
         </member>
+        <member name="T:YoutubeExplode.Videos.Streams.StreamClient">
+            <summary>
+            Queries related to media streams of YouTube videos.
+            </summary>
+        </member>
+        <member name="M:YoutubeExplode.Videos.Streams.StreamClient.#ctor(YoutubeExplode.ReverseEngineering.YoutubeHttpClient)">
+            <summary>
+            Initializes an instance of <see cref="T:YoutubeExplode.Videos.Streams.StreamClient"/>.
+            </summary>
+        </member>
+        <member name="M:YoutubeExplode.Videos.Streams.StreamClient.GetManifestAsync(YoutubeExplode.Videos.VideoId)">
+            <summary>
+            Gets the manifest that contains information about available streams in the specified video.
+            </summary>
+        </member>
+        <member name="M:YoutubeExplode.Videos.Streams.StreamClient.GetHttpLiveStreamUrlAsync(YoutubeExplode.Videos.VideoId)">
+            <summary>
+            Gets the HTTP Live Stream (HLS) manifest URL for the specified video (if it's a live video stream).
+            </summary>
+        </member>
+        <member name="M:YoutubeExplode.Videos.Streams.StreamClient.GetAsync(YoutubeExplode.Videos.Streams.IStreamInfo)">
+            <summary>
+            Gets the actual stream which is identified by the specified metadata.
+            </summary>
+        </member>
+        <member name="M:YoutubeExplode.Videos.Streams.StreamClient.CopyToAsync(YoutubeExplode.Videos.Streams.IStreamInfo,System.IO.Stream,System.IProgress{System.Double},System.Threading.CancellationToken)">
+            <summary>
+            Copies the actual stream which is identified by the specified metadata to the specified stream.
+            </summary>
+        </member>
+        <member name="M:YoutubeExplode.Videos.Streams.StreamClient.DownloadAsync(YoutubeExplode.Videos.Streams.IStreamInfo,System.String,System.IProgress{System.Double},System.Threading.CancellationToken)">
+            <summary>
+            Download the actual stream which is identified by the specified metadata to the specified file.
+            </summary>
+        </member>
         <member name="T:YoutubeExplode.Videos.Streams.StreamManifest">
             <summary>
             Manifest that contains information about available media streams in a specific video.
@@ -1152,41 +1191,6 @@
             <summary>
             Gets video-only streams (no audio).
             These streams have the widest range of qualities available.
-            </summary>
-        </member>
-        <member name="T:YoutubeExplode.Videos.Streams.StreamsClient">
-            <summary>
-            Queries related to media streams of YouTube videos.
-            </summary>
-        </member>
-        <member name="M:YoutubeExplode.Videos.Streams.StreamsClient.#ctor(YoutubeExplode.ReverseEngineering.YoutubeHttpClient)">
-            <summary>
-            Initializes an instance of <see cref="T:YoutubeExplode.Videos.Streams.StreamsClient"/>.
-            </summary>
-        </member>
-        <member name="M:YoutubeExplode.Videos.Streams.StreamsClient.GetManifestAsync(YoutubeExplode.Videos.VideoId)">
-            <summary>
-            Gets the manifest that contains information about available streams in the specified video.
-            </summary>
-        </member>
-        <member name="M:YoutubeExplode.Videos.Streams.StreamsClient.GetHttpLiveStreamUrlAsync(YoutubeExplode.Videos.VideoId)">
-            <summary>
-            Gets the HTTP Live Stream (HLS) manifest URL for the specified video (if it's a live video stream).
-            </summary>
-        </member>
-        <member name="M:YoutubeExplode.Videos.Streams.StreamsClient.GetAsync(YoutubeExplode.Videos.Streams.IStreamInfo)">
-            <summary>
-            Gets the actual stream which is identified by the specified metadata.
-            </summary>
-        </member>
-        <member name="M:YoutubeExplode.Videos.Streams.StreamsClient.CopyToAsync(YoutubeExplode.Videos.Streams.IStreamInfo,System.IO.Stream,System.IProgress{System.Double},System.Threading.CancellationToken)">
-            <summary>
-            Copies the actual stream which is identified by the specified metadata to the specified stream.
-            </summary>
-        </member>
-        <member name="M:YoutubeExplode.Videos.Streams.StreamsClient.DownloadAsync(YoutubeExplode.Videos.Streams.IStreamInfo,System.String,System.IProgress{System.Double},System.Threading.CancellationToken)">
-            <summary>
-            Download the actual stream which is identified by the specified metadata to the specified file.
             </summary>
         </member>
         <member name="T:YoutubeExplode.Videos.Streams.VideoOnlyStreamInfo">
@@ -1445,6 +1449,12 @@
         <member name="M:YoutubeExplode.Videos.VideoId.ToString">
             <inheritdoc />
         </member>
+        <member name="M:YoutubeExplode.Videos.VideoId.TryParse(System.String)">
+            <summary>
+            Attempts to parse the specified string as a video ID or URL.
+            Returns null in case of failure.
+            </summary>
+        </member>
         <member name="M:YoutubeExplode.Videos.VideoId.Equals(YoutubeExplode.Videos.VideoId)">
             <inheritdoc />
         </member>
@@ -1472,12 +1482,6 @@
         <member name="M:YoutubeExplode.Videos.VideoId.op_Implicit(YoutubeExplode.Videos.VideoId)~System.String">
             <summary>
             Converts ID to string.
-            </summary>
-        </member>
-        <member name="M:YoutubeExplode.Videos.VideoId.TryParse(System.String)">
-            <summary>
-            Attempts to parse the specified string as a video ID or URL.
-            Returns null in case of failure.
             </summary>
         </member>
         <member name="T:YoutubeExplode.YoutubeClient">
