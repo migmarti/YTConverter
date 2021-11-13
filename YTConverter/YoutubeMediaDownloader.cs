@@ -48,7 +48,7 @@ namespace YTConverter
                 }
                 title = replaceInvalidChars(title);
                 var streamManifest = await client.Videos.Streams.GetManifestAsync(id);
-                var streamInfo = streamManifest.GetMuxed().WithHighestVideoQuality();
+                var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
                 string downloadPath = $"{selectedPath}\\{title}.mp4";
                 await downloadYouTubeMedia(client, streamInfo, downloadPath);
                 return downloadPath;
